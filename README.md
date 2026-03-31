@@ -3,7 +3,7 @@
 # ECE A section 🎓
 
 ### 😃 Hi there.
-
+This is the basic version of the terminal based messaging server. Where anyone can host, any one can join any one. This mini project is made by myself... 
 > This page contains python script, which has two files.  
 >   1. **server.py** 🖥️ \
 >      The main file, hosts a system as a messaging server  
@@ -65,7 +65,8 @@ python3 client.py
 
 ##### Note:
 Make sure these two commands run on the devices on same local network 🌐.\
-You can use the same devices, but two different terminal windows.
+You can use the same devices, but two different terminal windows.\
+This has ip of 10.3.4.142, which may not be suitable for othe systems, and may has to assign manually.
 
 ---
 
