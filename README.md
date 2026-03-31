@@ -66,7 +66,7 @@ python3 client.py
 ##### Note:
 Make sure these two commands run on the devices on same local network 🌐.\
 You can use the same devices, but two different terminal windows.\
-This has ip of 10.3.4.142, which may not be suitable for othe systems, and may has to assign manually.
+This has ip of 10.3.4.142, which may not be suitable for other systems, and may has to assign manually.
 
 ---
 
