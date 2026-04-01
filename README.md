@@ -22,6 +22,14 @@ Dead simple... ✅
 ### #1
 run this command.. ⬇️
 ```git
+
+if ! command -v git >/dev/null 2>&1; then
+printf "Program git is not installed...\nPlease enter the password to continue...\nProceeding to install..."
+if  command -v  sudo >/dev/null 2>&1; then 
+sudo apt install git -y;
+else 
+apt install git -y;
+fi;
 cd ~/
 git clone "http://github.com/computer-collab/clab.git" \
 && \
