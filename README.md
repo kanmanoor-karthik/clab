@@ -21,8 +21,7 @@ Dead simple... ✅
 
 ### #1
 run this command.. ⬇️
-```git
-
+```bash
 if ! command -v git >/dev/null 2>&1; then
 
 
@@ -36,7 +35,13 @@ else
 apt install git -y;
 
 fi;
-fi;
+fi;```
+
+
+
+Then this
+```git
+
 cd ~/
 git clone "http://github.com/computer-collab/clab.git" \
 && \
