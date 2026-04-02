@@ -1,6 +1,9 @@
 import socket
 import threading
 
+
+hostname = socket.gethostname()
+ip_address = socket.gethostbyname(hostname)
 def receive(s):
     while True:
         try:
@@ -13,25 +16,22 @@ def receive(s):
 
 def main():
     hostx= input("Enter server address: ")
-    
+    host = None
     if hostx == "clab" : 
         host = "10.4.3.142"
         port=5000
     else :
+        host = hostx
         port = int(input("Enter port: "))
-    if  host and port:
-        pass
-    else :
+    if  not host and port:
         print("Please fill up the host and port")
         return
+    else :
+        pass
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        s.connect((host, port))
-    except:
-        print(Exception)
-        print("invalid value type of host and port!!")
-        return
-
+    
+    s.connect((host, port))
+    
     # ---- USERNAME HANDSHAKE ----
     while True:
         prompt = s.recv(1024).decode()
@@ -61,7 +61,7 @@ def main():
             msg = input(">> ")
             if msg.lower() == "exit":
                 break
-            s.sendall((msg + "\n").encode())
+            s.sendall(( msg + "\n").encode())
         except KeyboardInterrupt:
             break
 
