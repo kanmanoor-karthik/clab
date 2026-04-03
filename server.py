@@ -1,12 +1,30 @@
 import socket
 import threading
+import time
+import random
 
 HOST = '0.0.0.0'
 PORT = 5000
 
 clients = {}
 usernames = set()
+colors = {}
 lock = threading.Lock()
+
+# ANSI colors
+COLOR_LIST = [
+    "\033[91m",  # red
+    "\033[92m",  # green
+    "\033[93m",  # yellow
+    "\033[94m",  # blue
+    "\033[95m",  # magenta
+    "\033[96m",  # cyan
+]
+
+RESET = "\033[0m"
+
+def get_timestamp():
+    return time.strftime("%H:%M")
 
 def recv_line(conn):
     data = b""
@@ -17,24 +35,23 @@ def recv_line(conn):
         data += chunk
     return data.decode().strip()
 
-def broadcast(msg, sender):
+def broadcast(msg):
     with lock:
         for c in list(clients):
-            if c != sender:
-                try:
-                    c.sendall(msg.encode())
-                except:
-                    pass
+            try:
+                c.sendall(msg.encode())
+            except:
+                pass
 
 def handle_client(conn, addr):
     try:
         conn.sendall(b"Enter username:\n")
 
-        # ---- SAFE HANDSHAKE LOOP ----
+        # ---- HANDSHAKE ----
         while True:
             name = recv_line(conn)
             if name is None:
-                return  # client disconnected
+                return
 
             if not name:
                 conn.sendall(b"Name required\nEnter username:\n")
@@ -47,11 +64,16 @@ def handle_client(conn, addr):
                 else:
                     usernames.add(name)
                     clients[conn] = name
+                    colors[name] = random.choice(COLOR_LIST)
 
             conn.sendall(b"OK\n")
             break
 
         print(f"{name} connected")
+
+        # Notify others
+        join_msg = f"[{get_timestamp()}] {name} joined the chat\n"
+        broadcast(join_msg)
 
         # ---- MESSAGE LOOP ----
         while True:
@@ -62,9 +84,15 @@ def handle_client(conn, addr):
             if not msg:
                 continue
 
-            full = f"{clients[conn]}: {msg}\n"
-            print(full.strip())
-            broadcast(full, conn)
+            username = clients[conn]
+            color = colors[username]
+
+            formatted = f"[{get_timestamp()}] {color}{username}{RESET}: {msg}\n"
+
+            print(formatted.strip())
+
+            # 🔥 broadcast to ALL (including sender now)
+            broadcast(formatted)
 
     finally:
         with lock:
@@ -72,6 +100,11 @@ def handle_client(conn, addr):
                 username = clients[conn]
                 usernames.remove(username)
                 del clients[conn]
+                del colors[username]
+
+                leave_msg = f"[{get_timestamp()}] {username} left the chat\n"
+                broadcast(leave_msg)
+
                 print(f"{username} disconnected")
 
         conn.close()
