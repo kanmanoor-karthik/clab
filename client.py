@@ -2,8 +2,7 @@ import socket
 import threading
 import sys
 import readline
-
-
+import datetime
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
 
@@ -23,8 +22,9 @@ def receive(s):
             sys.stdout.write("\r")
             sys.stdout.write(" " * (len(current) + 4))
             sys.stdout.write("\r")
-
+            nowDate  = datetime.datetime.now()
             # print incoming message
+            print(nowDate)
             print(msg, end="")
 
             # redraw prompt + previous input
