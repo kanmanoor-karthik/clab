@@ -1,19 +1,38 @@
 import socket
 import threading
+import sys
+import readline
 
 
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
+
 def receive(s):
     while True:
         try:
             data = s.recv(1024)
             if not data:
                 break
-            print("\r" + data.decode() + ">> ", end="")
+
+            msg = data.decode()
+
+            # get current typed input
+            current = readline.get_line_buffer()
+
+            # move cursor to start and clear line
+            sys.stdout.write("\r")
+            sys.stdout.write(" " * (len(current) + 4))
+            sys.stdout.write("\r")
+
+            # print incoming message
+            print(msg, end="")
+
+            # redraw prompt + previous input
+            sys.stdout.write(">> " + current)
+            sys.stdout.flush()
+
         except:
             break
-
 def main():
     hostx= input("Enter server address: ")
     host = None
