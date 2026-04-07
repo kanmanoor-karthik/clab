@@ -108,3 +108,10 @@ We have two methods.
 > If you see, connected ✅, you are good to go. Else try restarting the files 🔄.
 >
 > You can start chatting 💬...
+
+
+
+# Contributors
+
+> [Batman](http://github.com/kanmanoor-karthik)\
+> [Flashman](http://github.com/kummarirahul1980)
