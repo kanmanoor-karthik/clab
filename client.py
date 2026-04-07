@@ -24,8 +24,10 @@ def receive(s):
             sys.stdout.write("\r")
             nowDate  = datetime.datetime.now()
             # print incoming message
-            print(nowDate)
-            print(msg, end="")
+            print()
+            print()
+            print()
+            print(nowDate,"      : "  ,msg, end="")
 
             # redraw prompt + previous input
             sys.stdout.write(">> " + current)
