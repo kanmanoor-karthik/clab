@@ -1,6 +1,4 @@
-# Hey Dear friends 👋
-
-# ECE A section 🎓
+# Hey Dear friends 👋
 
 ### 😃 Hi there.
 This is the basic version of the terminal based messaging server. Where anyone can host, any one can join any one. This mini project is made by myself... 
