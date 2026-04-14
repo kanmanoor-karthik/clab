@@ -1,4 +1,5 @@
-# Hey Dear friends 👋
+# Hey Dear friends 👋
+
 
 ### 😃 Hi there.
 This is the basic version of the terminal based messaging server. Where anyone can host, any one can join any one. This mini project is made by myself... 
@@ -42,7 +43,7 @@ Then this
 ```git
 
 cd ~/
-git clone "http://github.com/computer-collab/clab.git" \
+git clone "https://github.com/kanmanoor-karthik/clab.git" \
 && \
 echo "Git cloned Successfully "
 ```
@@ -55,7 +56,7 @@ This clones the remote (online) files into your system.
 
 **Run server as:**
 ```sh
-python3 ~/clab/server.py
+python3 ~/clab/serverNEW.py
 ```
 This will host server port 8000.
 
@@ -74,7 +75,7 @@ You can directly download the zip from github, extract files, and navigate the t
 
 server:
 ```sh
-python3 server.py
+python3 serverNEW.py
 ```
 
 client:

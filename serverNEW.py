@@ -11,14 +11,13 @@ usernames = set()
 colors = {}
 lock = threading.Lock()
 
-# ANSI colors
 COLOR_LIST = [
-    "\033[91m",  # red
-    "\033[92m",  # green
-    "\033[93m",  # yellow
-    "\033[94m",  # blue
-    "\033[95m",  # magenta
-    "\033[96m",  # cyan
+    "\033[91m",
+    "\033[92m",
+    "\033[93m",
+    "\033[94m",
+    "\033[95m",
+    "\033[96m",
 ]
 
 RESET = "\033[0m"
@@ -35,19 +34,19 @@ def recv_line(conn):
         data += chunk
     return data.decode().strip()
 
-def broadcast(msg):
+def broadcast(msg, sender=None):
     with lock:
         for c in list(clients):
-            try:
-                c.sendall(msg.encode())
-            except:
-                pass
+            if c != sender:
+                try:
+                    c.sendall(msg.encode())
+                except:
+                    pass
 
 def handle_client(conn, addr):
     try:
         conn.sendall(b"Enter username:\n")
 
-        # ---- HANDSHAKE ----
         while True:
             name = recv_line(conn)
             if name is None:
@@ -71,11 +70,9 @@ def handle_client(conn, addr):
 
         print(f"{name} connected")
 
-        # Notify others
         join_msg = f"[{get_timestamp()}] {name} joined the chat\n"
         broadcast(join_msg)
 
-        # ---- MESSAGE LOOP ----
         while True:
             msg = recv_line(conn)
             if msg is None:
@@ -91,8 +88,13 @@ def handle_client(conn, addr):
 
             print(formatted.strip())
 
-            # 🔥 broadcast to ALL (including sender now)
-            broadcast(formatted)
+            broadcast(formatted, conn)
+
+            you_msg = f"[{get_timestamp()}] You: {msg}\n"
+            try:
+                conn.sendall(you_msg.encode())
+            except:
+                pass
 
     finally:
         with lock:
