@@ -112,7 +112,7 @@ Enter port: 5000
 
 👨‍💻 Contributors
 
-- [Batman](http://github.com/kanmanoor-karthik)\
+- [Batman](http://github.com/kanmanoor-karthik)
 - [Flashman](http://github.com/kummarirahul1980)
 
 ---
